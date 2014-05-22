@@ -20,7 +20,7 @@ def LargeImageSave():
     dtypestr = "uint8"
     dtype = np.uint8
 
-    print "Saving this big png works for me"
+    print("Saving this big png works for me")
     outputname = '%dx%d_%s_test.png' % (xdim, ydim, dtypestr)
 
     a = np.zeros((xdim, ydim), dtype=dtype)
@@ -34,10 +34,10 @@ def LargeImageSave():
     del a
     del img
 
-    print "All done!"
+    print("All done!")
 
 
-    print "Saving a slightly larger png does not work for me"
+    print("Saving a slightly larger png does not work for me")
     ydim = xdim
     a = np.zeros((xdim, ydim), dtype=dtype)
     # misc.imsave(outputname, a)
@@ -47,7 +47,7 @@ def LargeImageSave():
     img = Image.fromarray(a, 'L')
     img.save(outputname)
 
-    print "All done!"
+    print("All done!")
 
 
 if __name__ == '__main__':
