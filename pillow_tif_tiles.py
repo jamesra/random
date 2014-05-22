@@ -8,10 +8,8 @@ import numpy as np
 import scipy.misc as misc
 from PIL import Image, TiffTags
 
-
-
-def LargeImageSave():
-    '''Allocate an image with dimensions larger than 2^31'''
+def TiledTifSave():
+    '''Allocate an image with dimensions larger than 2^31 and save it as a tiled tif'''
 
     # for i in range(14, 17):
         # dim = 1 << i
@@ -58,5 +56,5 @@ def CreateTiledTiffInfo(img=None):
 
 
 if __name__ == '__main__':
-    LargeImageSave()
+    TiledTifSave()
     pass
