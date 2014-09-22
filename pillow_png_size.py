@@ -16,14 +16,16 @@ def LargeImageSave():
         # dim -= 8
 
     xdim = 48000
-    ydim = 32769
+    ydim = 32767
     dtypestr = "uint8"
     dtype = np.uint8
+    extension = '.jp2'
+    
 
-    print("Saving this big png works for me")
-    outputname = '%dx%d_%s_test.png' % (xdim, ydim, dtypestr)
+    print("Saving this big %s works for me" % (extension))
+    outputname = '%dx%d_%s_test%s' % (xdim, ydim, dtypestr, extension)
 
-    a = np.zeros((xdim, ydim), dtype=dtype)
+    a = np.zeros((ydim, ydim), dtype=dtype)
 
     # Ideally Scipy would work but it throws a different exception
     # misc.imsave(outputname, a)
@@ -37,12 +39,12 @@ def LargeImageSave():
     print("All done!")
 
 
-    print("Saving a slightly larger png does not work for me")
+    print("Saving a slightly larger %s does not work for me" %(extension))
     ydim = xdim
     a = np.zeros((xdim, ydim), dtype=dtype)
     # misc.imsave(outputname, a)
 
-    outputname = '%dx%d_%s_test.png' % (xdim, ydim, dtypestr)
+    outputname = '%dx%d_%s_test%s' % (xdim, ydim, dtypestr, extension)
 
     img = Image.fromarray(a, 'L')
     img.save(outputname)
