@@ -8,7 +8,6 @@ import sys
 import argparse
 import os
 import multiprocessing
-import nornir_shared.files as files
 import nornir_pools as pools
 
 def create_parser():
@@ -63,33 +62,31 @@ def Execute(buildArgs=None):
         print("Input path %s must exist" % (src_path))
         
     try:
-        os.makedirs(dest_path, exist_ok=True)
+        if not os.path.exists(dest_path):
+            os.makedirs(dest_path)
     except IOError:
         print("Could not create destination path %s" % (dest_path))
     
     pool = pools.GetLocalMachinePool("parallel_copy", num_threads=args.cpu_count)
-    
-    cmd = cmd_template % (src_path, dest_path)
-    print(cmd)
-    pool.add_process(cmd, cmd)
-                    
+                        
     len_src_path = len(src_path)
-    for path in files.RecurseSubdirectoriesGenerator(src_path):         
+    for (path, dirnames, filenames) in os.walk(src_path):         
         #path should start with src_path, so remove that from the path
-        rel_path = path[len_src_path:] 
+        rel_path = path[len_src_path:]
         
-        if rel_path[0] == os.path.sep or rel_path[0] == os.path.altsep:
-            rel_path = rel_path[1:]
+        if len(rel_path) > 0:
+            if rel_path[0] == os.path.sep or rel_path[0] == os.path.altsep:
+                rel_path = rel_path[1:]
         
         full_dest_path = os.path.join(dest_path, rel_path)
         
         if not os.path.exists(full_dest_path):
-            os.makedirs(full_dest_path, exist_ok=True)
+            os.makedirs(full_dest_path)
          
         cmd = cmd_template % (path, full_dest_path)
         print(cmd)    
         
-        pool.add_process(cmd, cmd)
+       # pool.add_process(cmd, cmd)
     
 if __name__ == '__main__':
     Execute()
