@@ -86,7 +86,7 @@ def Execute(buildArgs=None):
         cmd = cmd_template % (path, full_dest_path)
         print(cmd)    
         
-       # pool.add_process(cmd, cmd)
+        pool.add_process(cmd, cmd)
     
 if __name__ == '__main__':
     Execute()
